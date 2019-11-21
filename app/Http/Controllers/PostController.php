@@ -29,7 +29,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        // $posts = Post::all();
+        $posts = Post::orderByDesc('id')->get();
         $tags  = Tag::all();
         // return $posts;
         return view('posts.index', ['posts' => $posts, 'trashed' => 0, 'tags' => $tags]);

@@ -11,12 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @stack('css')
@@ -26,7 +26,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-info text-white">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}" style="">
+                <a class="navbar-brand" href="{{ url('/') }}" style="font-family: Bangers; font-size: 2em;">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -61,6 +61,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a href="{{ route('users.profile') }}" class="dropdown-item">Profile</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -77,8 +78,8 @@
                 </div>
             </div>
         </nav>
-        <main class="">
-            <div class="container-fluid p-0 mt-1">
+        <main class="py-2">
+            <div class="container-fluid p-1 mt-1">
                 @include('partials.messages')
                 <div class="row">
                     @auth

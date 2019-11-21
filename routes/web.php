@@ -18,6 +18,10 @@ Route::middleware('auth')->group(function () {
     // Todo:: Restore All post from trash.
     // Route::get('/posts/restore-all', 'PostController@restore_all')->name('posts.restore_all');
     Route::resource('tags', 'TagController');
+
+    Route::get('/user-profile', 'UsersController@profile')->name('users.profile');
+    Route::get('/user-profile-edit', 'UsersController@profileEdit')->name('users.profile-edit');
+    Route::put('/user-profile-update', 'UsersController@profileUpdate')->name('users.profile-update');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {

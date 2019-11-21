@@ -4,12 +4,14 @@
 
 @push('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 
 @endpush
 
 @section('content')
 
 <div class="container">
+
     <div class="card">
         <div class="card-header">
             <strong>{{ (isset($post)) ? 'Update Post' : 'Create Post' }}</strong>
@@ -83,15 +85,17 @@
             </form>
         </div>
     </div>
+
 </div>
 
 @endsection
 
 @push('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
 <script>
     $(document).ready(function() {
-            $('.js-example-basic-multiple').select2();
-        });
+    $('.js-example-basic-multiple').select2();
+});
 </script>
 @endpush
