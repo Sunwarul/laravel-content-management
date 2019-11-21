@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Categories;
+use App\Http\Requests\Post\CreatePostRequest;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\Post\CreatePostRequest;
-use App\Tag;
 
 class PostController extends Controller
 {
+    /**
+     * Apply middleware on request
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('verifyCategoryCount')->only(['create', 'edit', 'store', 'update']);
     }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +29,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts =  Post::all();
-        $tags = Tag::all();
+        $posts = Post::all();
+        $tags  = Tag::all();
         // return $posts;
         return view('posts.index', ['posts' => $posts, 'trashed' => 0, 'tags' => $tags]);
     }
@@ -36,7 +43,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Categories::all();
-        $tags = Tag::all();
+        $tags       = Tag::all();
         return view('posts.create')->with('categories', $categories)->with('tags', $tags);
     }
 
@@ -53,20 +60,24 @@ class PostController extends Controller
             Db::statement('ALTER TABLE posts AUTO_INCREMENT = 1');
             Db::statement('ALTER TABLE post_tag AUTO_INCREMENT = 1');
         }
-        // store image
-        // dd($request->image);
+
+        // Sample method for ref.
+        // $image = $request->file('image')->store('images');
+        // Storage::move($image, 'sub' . $image);
+        // $image = 'sub' . $image;
+
         if ($request->hasFile('image')) {
-            $image = $request->image->store('posts');
+            $image = $request->file('image')->store('posts');
         } else {
             $image = '';
         }
         // create full post
         $post = Post::create([
-            'title' => $request->title,
+            'title'       => $request->title,
             'description' => $request->description,
-            'content' => $request->content,
-            'image' => $image,
-            'category_id' => $request->category
+            'content'     => $request->content,
+            'image'       => $image,
+            'categories_id' => $request->category,
         ]);
         if ($request->tags) {
             $post->tags()->attach($request->tags);
@@ -97,7 +108,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Categories::all();
-        $tags = Tag::all();
+        $tags       = Tag::all();
         return view('posts.create')->with('post', $post)->with('categories', $categories)->with('tags', $tags);
     }
 
@@ -111,10 +122,10 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'title'       => 'required',
             'description' => 'required',
-            'content' => 'required',
-            'category' => 'required'
+            'content'     => 'required',
+            'category'    => 'required',
         ]);
         $data = $request->only(['title', 'description', 'content']);
 
@@ -167,8 +178,8 @@ class PostController extends Controller
         $trashed = Post::onlyTrashed()->get();
         // return view('posts.index')->withPosts($trashed);
         return view('posts.index', [
-            'posts' => $trashed,
-            'trashed' => 1
+            'posts'   => $trashed,
+            'trashed' => 1,
         ]);
     }
 

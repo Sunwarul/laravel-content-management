@@ -24,19 +24,15 @@
                 @foreach ($tags as $tag)
                 <div class="list-group-item">
                     <a href="">{{ $tag->name }}</a>
-                    <span class="badge badge-success">{{ $tag->posts->count() }}</span>
-                    <a href="#" class="btn btn-sm btn-danger float-right" onclick="event.preventDefault();if(confirm(' Are you sure')) {
-                            document.getElementById('deleteForm').submit();}">
-                        Delete
-                    </a>
+                    <span class="badge badge-secondary">Tagged ---> <strong>{{ $tag->posts->count() }}</strong></span>
+                    <form class="d-inline" action="{{ route('tags.destroy', $tag->id) }}" method="POST" id="deleteForm">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-sm btn-danger float-right" value="Delete">
+                    </form>
 
                     <a href="{{ route('tags.edit', $tag->id) }}"
                         class="btn btn-sm btn-warning float-right mr-1">Edit</a>
-
-                    <form action="{{ route('tags.destroy', $tag->id) }}" method="POST" id="deleteForm">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    </form>
                 </div>
                 @endforeach
             </div>

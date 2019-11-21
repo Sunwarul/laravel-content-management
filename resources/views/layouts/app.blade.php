@@ -19,13 +19,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('css')
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-info text-white">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/') }}" style="">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -76,13 +77,18 @@
                 </div>
             </div>
         </nav>
-        <main class="py-1">
-            <div class="container-fluid">
+        <main class="">
+            <div class="container-fluid p-0 mt-1">
                 @include('partials.messages')
                 <div class="row">
                     @auth
                     <div class="col-md-2">
                         <ul class="list-group">
+                            @if(auth()->user()->isAdmin())
+                            <div class="list-group-item">
+                               <a href="{{ route('users.index') }}">Users</a>
+                            </div>
+                            @endif
                             <li class="list-group-item">
                                 <a href="{{ route('posts.index') }}">All Posts</a>
                             </li>
@@ -112,6 +118,7 @@
             </div>
         </main>
     </div>
+    @stack('js')
 </body>
 
 </html>

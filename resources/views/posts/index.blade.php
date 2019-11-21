@@ -12,7 +12,7 @@
         @if($trashed)
         <strong>Trashed posts</strong>
         <div>
-            <a href="{{ route('posts.restore_all') }}" class="btn btn-danger">Restore All</a>
+            <a href="#" class="btn btn-outline-danger">Restore All</a>
         </div>
         @else
         <strong>All posts</strong>
@@ -117,7 +117,5 @@
 
 @endsection
 @push('js')
-function deleteParmanently(id) {
-document.getElementById('delForm').submit();
-}
+
 @endpush

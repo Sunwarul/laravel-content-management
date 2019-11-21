@@ -3,6 +3,7 @@
 @section('title', 'Create Post')
 
 @push('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 
 @endpush
 
@@ -28,6 +29,7 @@
                 <div class="form-group">
                     <textarea name="description" id="description" cols="33" rows="3" class="form-control"
                         placeholder="Post description" required>{{ isset($post) ? $post->description : '' }}</textarea>
+
                 </div>
                 <div class="form-group">
                     <textarea name="content" id="content" cols="30" rows="10" class="form-control"
@@ -57,13 +59,11 @@
 
                 @if($tags->count() > 0)
                 <div class="form-group">
-                    <select name="tags[]" id="tags" class="form-control" multiple>
+                    <select name="tags[]" id="tags" class="form-control js-example-basic-multiple" multiple>
                         @foreach($tags as $tag)
-                        <option value="{{ $tag->id }}"
-                            @if(isset($post))
-                                @if($post->hasTag($tag->id))
-                                    selected
-                                @endif
+                        <option value="{{ $tag->id }}" @if(isset($post)) @if($post->hasTag($tag->id))
+                            selected
+                            @endif
                             @endif
                             >{{ $tag->name }}</option>
                         @endforeach
@@ -88,5 +88,10 @@
 @endsection
 
 @push('js')
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+</script>
 @endpush

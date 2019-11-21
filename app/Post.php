@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['title', 'description', 'content', 'image', 'published_at', 'category_id'];
-
+    protected $fillable = ['title', 'description', 'content', 'image', 'published_at', 'categories_id'];
+    // protected $primaryKey = 'categories_id';
+    // protected $increament = false;
     /**
      * Delete post image from controller
      *
@@ -22,7 +23,7 @@ class Post extends Model
     }
     public function category()
     {
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Categories::class, 'categories_id');
     }
     public function tags()
     {

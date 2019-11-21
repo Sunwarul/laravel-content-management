@@ -40,7 +40,7 @@ class CategoriesController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $min_one_category = Categories::all()->count();
-        if(!$min_one_category) {
+        if (!$min_one_category) {
             DB::statement('ALTER TABLE categories AUTO_INCREMENT = 1');
         }
         $category = new Categories();
@@ -99,8 +99,13 @@ class CategoriesController extends Controller
      */
     public function destroy(Categories $category)
     {
+        if ($category->posts) {
+            if ($category->posts->count() > 0) {
+                session()->flash('warning', 'Category have related post. Can\'t be deleted!');
+                return redirect()->back();
+            }
+        }
         $category->delete();
-
         session()->flash('warning', 'Category deleted successfully!');
         return redirect(route('categories.index'));
     }
