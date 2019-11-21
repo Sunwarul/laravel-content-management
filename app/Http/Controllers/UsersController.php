@@ -26,8 +26,7 @@ class UsersController extends Controller
     {
         $user->role = 'admin';
         $user->save();
-        session()->flash("User ".$user->name." made as an admin");
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('success', "User ".$user->name." made as an admin");
     }
 
 
@@ -40,8 +39,7 @@ class UsersController extends Controller
     {
         $user->role = 'writer';
         $user->save();
-        session()->flash("User ".$user->name." made as an writer");
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('warning', "User ".$user->name." made as an writer");
     }
 
 

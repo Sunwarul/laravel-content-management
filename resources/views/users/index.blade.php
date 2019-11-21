@@ -14,7 +14,7 @@
             <h1>All Users</h1>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered text-center">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -30,7 +30,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <img src="https://ui-avatars.com/api/?name={{ $user->name }}" alt="">
+                            <img src="{{ Gravatar::src($user->email) }}" style="border-radius: 50%">
                         </td>
                         <td>{{ $user->role }}</td>
                         <td>
@@ -42,10 +42,10 @@
                             @elseif(($user->id != 1))
                             <form action="{{ route('users.make-writer', $user->id) }}" method="POST">
                                 @csrf
-                                <input type="submit" class="btn btn-warning" value="Make Writer">
+                                <input type="submit" class="btn btn-warning" value="Make Writer 🖊🖋">
                             </form>
                             @else
-                                <em>Super Admin</em>
+                            <em>Super Admin </em> ☕
                             @endif
                         </td>
                     </tr>
