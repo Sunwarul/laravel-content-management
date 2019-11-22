@@ -29,3 +29,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
     Route::post('users/{user}/make-writer', 'UsersController@makeWriter')->name('users.make-writer');
 });
+
+Route::any('/search', 'PagesController@search')->name('posts.search');

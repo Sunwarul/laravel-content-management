@@ -88,7 +88,6 @@
                                     @if(!empty($post->image))
                                     <img alt="Image" src="{{ asset('/storage/'.$post->image) }}" width="300">
                                     @endif
-                                    </img>
                                 </div>
                                 <div class="col-md-7">
                                     {{ substr($post->content, 0, 400) }} ...
@@ -107,6 +106,8 @@
             </li>
             @endforeach
         </ul>
+        {{ $posts->links() }}
+
         @else
         <h3 class="text-center">
             No Post yet!

@@ -5,7 +5,8 @@
 @push('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-
+<!-- Theme included stylesheets -->
+<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -18,7 +19,7 @@
         </div>
         <div class="card-body">
             <form action="{{ isset($post) ? route('posts.update', $post->id) : route('posts.store') }}" method="POST"
-                enctype="multipart/form-data">
+                enctype="multipart/form-data" id="postForm">
                 @csrf
                 @if(isset($post))
                 @method('PUT')
@@ -26,17 +27,22 @@
                 @include('partials.form_error')
                 <div class="form-group">
                     <input type="text" name="title" placeholder="Post Title" class="form-control" required
-                        value="{{ isset($post) ? $post->title : '' }}">
+                        value="{{ isset($post) ? $post->title : request()->old('title') }}">
                 </div>
                 <div class="form-group">
                     <textarea name="description" id="description" cols="33" rows="3" class="form-control"
-                        placeholder="Post description" required>{{ isset($post) ? $post->description : '' }}</textarea>
+                        placeholder="Post description" required>{{ isset($post) ? $post->description : request()->old('description') }}</textarea>
 
                 </div>
-                <div class="form-group">
-                    <textarea name="content" id="content" cols="30" rows="10" class="form-control"
-                        placeholder="Post content" required>{{ isset($post) ? $post->content : '' }}</textarea>
+                {{-- <div class="form-group">
+                    <div id="editor" class="form-control"></div>
+                    <input type="hidden" name="content">
                 </div>
+                 --}}
+                 <div class="form-group">
+                    <textarea name="content" id="content" cols="33" rows="9" class="form-control"
+                    placeholder="Post description" required>{{ isset($post) ? $post->content : request()->old('content') }}</textarea>
+                 </div>
                 @if(isset($post) && !empty($post->image))
                 <img src="/storage/{{ $post->image }}" class="img-thumbnail">
                 @endif
@@ -91,8 +97,27 @@
 @endsection
 
 @push('js')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script>
+
+// var quill = new Quill('#editor', {
+//   theme: 'snow'
+// });
+
+// var form = document.getElementById('postForm');
+// form.onsubmit = function() {
+//   // Populate hidden form on submit
+//   var content = document.querySelector('input[name=content]');
+//   content.value = JSON.stringify(quill.getContents());
+//   return true;
+// };
+
+
+
+</script>
 <script>
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();

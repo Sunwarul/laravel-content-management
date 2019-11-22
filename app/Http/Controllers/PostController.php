@@ -30,7 +30,8 @@ class PostController extends Controller
     public function index()
     {
         // $posts = Post::all();
-        $posts = Post::orderByDesc('id')->get();
+        // $posts = Post::orderByDesc('id')->get();
+        $posts = Post::simplePaginate(1);
         $tags  = Tag::all();
         // return $posts;
         return view('posts.index', ['posts' => $posts, 'trashed' => 0, 'tags' => $tags]);
@@ -56,6 +57,7 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
+        // return $request;
         $minimum_one_post = Post::find(1);
         if (!$minimum_one_post) {
             Db::statement('ALTER TABLE posts AUTO_INCREMENT = 1');

@@ -26,7 +26,7 @@
             <em>{{ $post->description }}</em>
             <hr>
             <p class="lead">
-                {{ $post->content }}
+                {!! $post->content !!}
             </p>
             <p>
                 @if(!empty($post->image))
